@@ -11,22 +11,27 @@ class App extends Component {
         };
         this.renderChoice = this.renderBallOrButton.bind(this)
         this.buttonClickHandler = this.buttonClickHandler.bind(this)
+        console.log(this);
     };
-
-    buttonClickHandler() {
-   
+    buttonClickHandler(e) {
+        this.setState({...this.state,[e.target.name]:true})
    }
     renderBallOrButton() {
+        console.log(this.state);
 		if (this.state.renderBall) {
 		    return <div className="ball" style={this.state.ballPosition}></div>
 		} else {
-		    return <button onClick={this.buttonClickHandler} >Start</button>
+		    return <button className="start" name="renderBall" onClick={this.buttonClickHandler} >Start</button>
 		}
     }
-
+    
     // bind ArrowRight keydown event
     componentDidMount() {
-      
+        document.addEventListener("keydown",(e)=>{
+           if ("ArrowRight"==e.key) {
+            this.setState({...this.state,["posi"]:this.state.posi+5,ballPosition:{ "left":`${Number(this.state.ballPosition.left.split("px")[0])+5}px` }})
+           }
+        })
     }
 
     render() {
